@@ -879,7 +879,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
         sendRealAppNotification({
           title: `Payment Received · #${inv.invNo}`,
           body: `${inv.buyer?.name || 'Client'} settled ${formatINR(amt)} (${method})`,
-          url: `/invoice-view.html?id=${encodeURIComponent(inv.id)}`,
+          url: `invoice-view.html?id=${encodeURIComponent(inv.id)}`,
           tag: `pay-${inv.id}`
         });
         if (typeof onUpdated === 'function') onUpdated();
@@ -985,27 +985,27 @@ window.IFCloud.ready.catch(function () {}).then(function () {
   /* --------------------------------------------------------------------------
      3B. Real App Device Notifications (via Service Worker & Notification API)
      -------------------------------------------------------------------------- */
-  let swRegistrationPromise = null;
+  var swRegistrationPromise;
 
   function ensureServiceWorker() {
     if (!('serviceWorker' in navigator)) return Promise.resolve(null);
     if (!swRegistrationPromise) {
       swRegistrationPromise = navigator.serviceWorker
-        .register('/sw.js', { scope: '/' })
+        .register('sw.js', { scope: './' })
         .catch(() => null);
     }
     return swRegistrationPromise;
   }
 
-  async function sendRealAppNotification({ title, body, url = '/dashboard.html', tag = 'invoiceflex-alert' }) {
+  async function sendRealAppNotification({ title, body, url = 'dashboard.html', tag = 'invoiceflex-alert' }) {
     if (!('Notification' in window) || Notification.permission !== 'granted') return false;
     try {
       const reg = await ensureServiceWorker();
       if (reg && typeof reg.showNotification === 'function') {
         await reg.showNotification(title, {
           body,
-          icon: '/assets/icons/pwa-192x192.png',
-          badge: '/assets/icons/pwa-192x192.png',
+          icon: 'assets/icons/pwa-192x192.png',
+          badge: 'assets/icons/pwa-192x192.png',
           tag,
           vibrate: [120, 60, 120],
           data: { url }
@@ -1014,7 +1014,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
       }
       const n = new Notification(title, {
         body,
-        icon: '/assets/icons/pwa-192x192.png',
+        icon: 'assets/icons/pwa-192x192.png',
         tag
       });
       n.onclick = () => {
@@ -1045,7 +1045,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
       const ok = await sendRealAppNotification({
         title: 'InvoiceFlex Alerts Enabled',
         body: 'You will receive real device notifications for new invoices, payments & overdue alerts.',
-        url: '/dashboard.html',
+        url: 'dashboard.html',
         tag: 'invoiceflex-welcome'
       });
       if (ok) toast('Real notification sent to your device!', 'success');
@@ -1071,7 +1071,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
           sendRealAppNotification({
             title: `${overdueList.length} Overdue Invoice${overdueList.length > 1 ? 's' : ''}`,
             body: `#${first.invNo} (${first.buyer?.name || 'Client'}) · ${formatINR(pState.balance)} pending`,
-            url: `/invoice-view.html?id=${encodeURIComponent(first.id)}`,
+            url: `invoice-view.html?id=${encodeURIComponent(first.id)}`,
             tag: `overdue-${todayIso}`
           });
           localStorage.setItem(alertKey, todayIso);
@@ -1344,7 +1344,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
     }
 
     // Dynamic dashboard greeting
-    const pagePath = window.location.pathname.toLowerCase();
+    const pagePath = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (pagePath.includes('dashboard')) {
       const greetHeading = document.querySelector('.main-content h2');
       if (greetHeading && greetHeading.textContent.includes('Welcome back')) {
@@ -1781,7 +1781,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
      7. Live Table Search & Status Filter (Customers & Invoices)
      -------------------------------------------------------------------------- */
   function initListFiltering() {
-    const path = window.location.pathname.toLowerCase();
+    const path = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (path.includes('customers') || path.includes('invoice-list')) return;
     const bar = document.querySelector('.table-header-bar');
     const table = document.querySelector('.enterprise-table');
@@ -1842,7 +1842,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
      8. Smooth Delete Confirmation with Undo Toast
      -------------------------------------------------------------------------- */
   function initDeleteActions() {
-    const path = window.location.pathname.toLowerCase();
+    const path = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (path.includes('customers') || path.includes('invoice-list') || path.includes('invoice-create') || path.includes('quotations') || path.includes('bill-book')) return;
 
     document.querySelectorAll('.table-action-icon-btn.delete-hover').forEach((btn) => {
@@ -1850,7 +1850,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
       btn.removeAttribute('onclick');
       btn.addEventListener('click', async () => {
         const row = btn.closest('tr');
-        const isInvoice = window.location.pathname.includes('invoice');
+        const isInvoice = (window.location.pathname.split('/').pop() || 'index.html').includes('invoice');
         const labelEl = row ? row.querySelector('.col-bold') : null;
         const label = labelEl ? labelEl.textContent.trim().split('\n')[0] : 'this record';
 
@@ -1943,7 +1943,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
   }
 
   function initDashboardPage() {
-    if (!window.location.pathname.toLowerCase().includes('dashboard')) return;
+    if (!(window.location.pathname.split('/').pop() || 'index.html').toLowerCase().includes('dashboard')) return;
     const statsGrid = document.querySelector('.stats-grid');
     if (!statsGrid) return;
 
@@ -2198,10 +2198,10 @@ window.IFCloud.ready.catch(function () {}).then(function () {
   }
 
   function initCustomersModule() {
-    const path = window.location.pathname.toLowerCase();
+    const path = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
 
     // 1. Customers Directory (customers.html)
-    if (path.includes('customers.html') || path.endsWith('/customers')) {
+    if (path.includes('customers.html') || path === 'customers') {
       const table = document.querySelector('table.enterprise-table');
       const tbody = table ? table.querySelector('tbody') : null;
       const bar = document.querySelector('.table-header-bar');
@@ -2547,7 +2547,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
   }
 
   function initInvoicesListModule() {
-    if (!window.location.pathname.toLowerCase().includes('invoice-list')) return;
+    if (!(window.location.pathname.split('/').pop() || 'index.html').toLowerCase().includes('invoice-list')) return;
     const flatWrapper = document.getElementById('invoice-flat-wrapper');
     const monthlyGroupsEl = document.getElementById('invoice-monthly-groups');
     const monthlySummaryEl = document.getElementById('invoice-monthly-summary');
@@ -3917,7 +3917,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
       sendRealAppNotification({
         title: `${draft.docType === 'challan' ? 'Delivery Challan' : draft.docType === 'raw' ? 'Raw Material Bill' : 'Tax Invoice'} #${draft.invNo}`,
         body: `${draft.buyer?.name || 'Client'} · Total ${formatINR(totals.grand)}${adv > 0.01 ? ` (Adv: ${formatINR(adv)})` : ''}`,
-        url: `/invoice-view.html?id=${encodeURIComponent(newId)}`,
+        url: `invoice-view.html?id=${encodeURIComponent(newId)}`,
         tag: `inv-${newId}`
       });
 
@@ -3933,7 +3933,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
         sendRealAppNotification({
           title: `Quotation #${draft.invNo} Saved`,
           body: `Prepared for ${draft.buyer?.name || 'Client'}`,
-          url: `/invoice-preview.html?type=quotation&qid=${encodeURIComponent(qRecord.id)}`,
+          url: `invoice-preview.html?type=quotation&qid=${encodeURIComponent(qRecord.id)}`,
           tag: `quote-${qRecord.id}`
         });
         toast(`Quotation #${draft.invNo} saved to Quotations ledger`, 'success');
@@ -4741,7 +4741,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
      12. Invoice View Detail & Payment Recording (invoice-view.html)
      -------------------------------------------------------------------------- */
   function initInvoiceViewActions() {
-    if (!window.location.pathname.toLowerCase().includes('invoice-view')) return;
+    if (!(window.location.pathname.split('/').pop() || 'index.html').toLowerCase().includes('invoice-view')) return;
     const mainEl = document.querySelector('.main-content');
     if (!mainEl) return;
 
@@ -4926,7 +4926,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
      13. Interactive Reports Period Switcher & CSV Export (reports.html)
      -------------------------------------------------------------------------- */
   function initReportsModule() {
-    if (!window.location.pathname.toLowerCase().includes('reports')) return;
+    if (!(window.location.pathname.split('/').pop() || 'index.html').toLowerCase().includes('reports')) return;
 
     const tabs = document.querySelectorAll('input[name="report_period"]');
     const collectedEl = document.getElementById('rep-stat-collected');
@@ -5360,8 +5360,8 @@ window.IFCloud.ready.catch(function () {}).then(function () {
   }
 
   function initSettingsAndProfileForms() {
-    const isSettings = window.location.pathname.includes('company-settings');
-    const isProfile = window.location.pathname.includes('profile');
+    const isSettings = (window.location.pathname.split('/').pop() || 'index.html').includes('company-settings');
+    const isProfile = (window.location.pathname.split('/').pop() || 'index.html').includes('profile');
     if (!isSettings && !isProfile) return;
 
     const currentUser = getCurrentUser();
@@ -6423,7 +6423,7 @@ window.IFCloud.ready.catch(function () {}).then(function () {
      16. Help Center Live FAQ Filter & Ticket Submission
      -------------------------------------------------------------------------- */
   function initHelpModule() {
-    if (!window.location.pathname.includes('help')) return;
+    if (!(window.location.pathname.split('/').pop() || 'index.html').includes('help')) return;
 
     const faqSearch = document.querySelector('.main-content .search-input');
     const faqCards = document.querySelectorAll('.faq-card');

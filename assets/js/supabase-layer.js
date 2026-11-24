@@ -625,7 +625,7 @@
   }
   async function resetPassword(email) {
     if (!sb) return { error: { message: 'Cloud library not loaded' } };
-    return sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/index.html' });
+    return sb.auth.resetPasswordForEmail(email, { redirectTo: new URL('index.html', window.location.href).href });
   }
 
   async function verifyPassword(pw) {
