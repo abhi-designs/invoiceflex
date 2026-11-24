@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Register Company - InvoiceFlex</title>
+  <link rel="icon" type="image/png" href="/assets/aistudio/LOGO_50a3777b.png">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#007AFF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="InvoiceFlex">
+  <script>(function(){var t=localStorage.getItem('invoiceflex_theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();</script>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/forms.css">
+  <style>
+    body {
+      background-color: var(--bg-app);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+    .auth-container {
+      width: 100%;
+      max-width: 480px;
+    }
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: clamp(1.45rem, 4vw, 1.8rem);
+      color: var(--text-main);
+      margin-bottom: 20px;
+    }
+    .auth-logo .logo-icon {
+      width: 44px;
+      height: 44px;
+      padding: 5px;
+      border-radius: 12px;
+    }
+    .auth-logo span {
+      color: var(--primary);
+    }
+    .auth-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: clamp(22px, 4.5vw, 34px) clamp(18px, 4.5vw, 30px);
+      box-shadow: var(--shadow-lg);
+    }
+    .auth-step-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      background-color: var(--primary-light);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .auth-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .auth-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.45;
+    }
+    .auth-error-box {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background-color: var(--danger-light);
+      color: var(--danger-dark);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255, 59, 48, 0.25);
+    }
+    .auth-footer {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .login-link {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .login-link:hover {
+      color: var(--primary-hover);
+    }
+    @media (max-width: 520px) {
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-container">
+    <div class="auth-logo">
+      <div class="logo-icon"><img src="/assets/aistudio/LOGO_50a3777b.png" alt="InvoiceFlex"></div>
+      <div class="logo-text">Invoice<span>Flex</span></div>
+    </div>
+
+    <div class="auth-card login-card">
+      <div class="auth-step-pill">Step 1 of 2 · New Company Registration</div>
+      <h1 class="auth-title">Create your business account</h1>
+      <p class="auth-desc">Register your admin profile first, then complete your GST, address &amp; bank setup before opening your dashboard.</p>
+
+      <div id="register-info-box" style="display:none;padding:10px 14px;border-radius:12px;background-color:var(--primary-light);color:var(--primary);font-size:0.8125rem;font-weight:600;margin-bottom:14px;border:1px solid rgba(0,122,255,0.22);"></div>
+      <div id="register-error-box" class="auth-error-box" role="alert"></div>
+
+      <form id="register-form" action="company-settings.html" method="get" novalidate>
+        <div class="form-grid" style="margin-bottom: 0;">
+          <div class="form-group">
+            <label class="form-label" for="reg-first-name">
+              First Name <span class="required-star">*</span>
+            </label>
+            <input type="text" id="reg-first-name" class="form-control" placeholder="e.g. Rajesh" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-last-name">
+              Last Name <span class="required-star">*</span>
+            </label>
+            <input type="text" id="reg-last-name" class="form-control" placeholder="e.g. Mehta" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-email">
+            Work Email Address <span class="required-star">*</span>
+          </label>
+          <input type="email" id="reg-email" class="form-control" placeholder="owner@yourcompany.com" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-phone">
+            Mobile Number <span class="required-star">*</span>
+          </label>
+          <input type="tel" id="reg-phone" class="form-control" placeholder="+91 98765 43210" required>
+        </div>
+
+        <div class="form-grid" style="margin-bottom: 20px;">
+          <div class="form-group">
+            <label class="form-label" for="reg-password">
+              Password <span class="required-star">*</span>
+            </label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-confirm-password">
+              Confirm Password <span class="required-star">*</span>
+            </label>
+            <input type="password" id="reg-confirm-password" class="form-control" placeholder="Re-enter password" required minlength="6" autocomplete="new-password">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">
+          Create Account &amp; Continue to Business Setup →
+        </button>
+      </form>
+    </div>
+
+    <p class="auth-footer">
+      Already have an account? <a href="index.html" class="login-link">Sign In</a>
+    </p>
+  </div>
+
+  <script src="/assets/js/supabase-config.js"></script>
+  <script src="/assets/js/supabase-bridge.js" defer></script>
+  <script src="/assets/js/supabase-layer.js" defer></script>
+  <script src="/assets/js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Document Preview - InvoiceFlex</title>
+  <link rel="icon" type="image/png" href="/assets/aistudio/LOGO_50a3777b.png">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#007AFF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="InvoiceFlex">
+  <script>(function(){var t=localStorage.getItem('invoiceflex_theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();</script>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/forms.css">
+  <link rel="stylesheet" href="/assets/css/invoice.css">
+  <link rel="stylesheet" href="/assets/css/billbook.css">
+  <link rel="stylesheet" href="/assets/css/responsive.css">
+</head>
+<body style="background-color: var(--bg-app); padding: 28px 16px;">
+
+  <!-- Floating Actions bar (No Print) -->
+  <div class="invoice-actions-panel no-print">
+    <div class="actions-panel-left">
+      <a href="invoice-create.html" class="btn btn-secondary">
+        <svg class="icon-svg" style="width:14px; height:14px;" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Editor
+      </a>
+      <span style="font-size: 0.875rem; color: var(--text-muted);" id="previewing-doc-label">Previewing Document</span>
+      <div class="ios-segmented" id="preview-style-toggle" style="margin-left: 4px;">
+        <button type="button" class="ios-segmented-btn active" data-sheet-style="classic">Classic Format</button>
+        <button type="button" class="ios-segmented-btn" data-sheet-style="modern">Modern SaaS</button>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" id="btn-a4-fit-toggle" title="Toggle between Full A4 Page and Fit-to-Screen overview">Fit A4 to Screen</button>
+    </div>
+    
+    <div class="actions-panel-right">
+      <button type="button" class="btn btn-secondary" id="btn-convert-quote" style="display: none;">
+        Convert to Tax Invoice
+      </button>
+
+      <!-- Save straight into a Bill Book Folder -->
+      <button type="button" class="btn btn-secondary" id="btn-save-to-billbook">
+        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        Save to Bill Book
+      </button>
+
+      <!-- Standard print triggers styled nicely -->
+      <button class="btn btn-outline" onclick="window.print()">
+        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print / Save PDF
+      </button>
+      
+      <a href="invoice-list.html?sent=true" class="btn btn-primary" id="btn-approve-dispatch">
+        <svg class="icon-svg" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Approve & Send
+      </a>
+    </div>
+  </div>
+
+  <!-- Full A4 Preview Stage (Preserves 210mm x 297mm proportions across all screens) -->
+  <div class="a4-preview-stage" id="a4-preview-stage">
+    <!-- Classic Indian GST Tax Invoice / Quotation / Delivery Challan Sheet (Default) -->
+    <div id="classic-sheet-root" class="classic-sheet"></div>
+
+    <!-- Modern SaaS Printable A4 Sheet Frame -->
+    <div class="invoice-sheet" id="modern-sheet-root" style="display: none;">
+    
+    <!-- Header Block -->
+    <header class="invoice-sheet-header">
+      <div class="invoice-brand">
+        <div class="invoice-logo" id="preview-company-brand">
+          <div class="invoice-logo-dot"></div>
+          <span>InvoiceFlex</span>
+        </div>
+        <div class="invoice-company-address">
+          <strong>—</strong>
+        </div>
+      </div>
+      
+      <div class="invoice-type-badge-container">
+        <span class="invoice-title-text">TAX INVOICE</span>
+        <span class="invoice-gstin-badge">GSTIN: —</span>
+      </div>
+    </header>
+
+    <!-- Parties Box -->
+    <div class="invoice-parties-grid">
+      <div class="invoice-party-block">
+        <span class="invoice-party-title">Seller / Consigner</span>
+        <div class="invoice-party-name">—</div>
+        <div class="invoice-party-details-text">—</div>
+      </div>
+      
+      <div class="invoice-party-block">
+        <span class="invoice-party-title">Buyer / Consignee (Bill To)</span>
+        <div class="invoice-party-name">—</div>
+        <div class="invoice-party-details-text">—</div>
+      </div>
+    </div>
+
+    <!-- Metadata Details Bar -->
+    <div class="invoice-meta-bar">
+      <div class="invoice-meta-item">
+        <span class="invoice-meta-label">Invoice Number</span>
+        <span class="invoice-meta-val col-mono highlight">—</span>
+      </div>
+      <div class="invoice-meta-item">
+        <span class="invoice-meta-label">Issue Date</span>
+        <span class="invoice-meta-val">—</span>
+      </div>
+      <div class="invoice-meta-item">
+        <span class="invoice-meta-label">Due Date</span>
+        <span class="invoice-meta-val">—</span>
+      </div>
+      <div class="invoice-meta-item">
+        <span class="invoice-meta-label">Payment Terms</span>
+        <span class="invoice-meta-val">—</span>
+      </div>
+    </div>
+
+    <!-- Product Line Items Table -->
+    <table class="invoice-items-table">
+      <thead>
+        <tr>
+          <th style="width: 5%;">#</th>
+          <th style="width: 45%;">Description of Service / Good</th>
+          <th style="width: 12%;" class="col-mono">HSN/SAC</th>
+          <th style="width: 8%;" class="col-align-right">Qty</th>
+          <th style="width: 15%;" class="col-align-right">Rate (₹)</th>
+          <th style="width: 15%;" class="col-align-right">Taxable Val (₹)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Summary Details Block -->
+    <div class="invoice-summary-block">
+      <!-- Left side: Banking Ledger info -->
+      <div class="invoice-summary-left">
+        <div class="invoice-payment-info-box">
+          <div class="info-box-title">Remittance Information</div>
+          <div class="info-box-row">
+            <span>Beneficiary Bank Name:</span>
+            <span>—</span>
+          </div>
+          <div class="info-box-row">
+            <span>Branch/IFSC:</span>
+            <span>—</span>
+          </div>
+          <div class="info-box-row">
+            <span>Account Number:</span>
+            <span class="col-mono">—</span>
+          </div>
+          <div class="info-box-row">
+            <span>Account Type:</span>
+            <span>—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side: GST Computations -->
+      <div class="invoice-summary-right">
+        <div class="calc-row">
+          <span>Taxable Value (Subtotal)</span>
+          <span class="col-mono" style="font-weight: 600;">₹0.00</span>
+        </div>
+
+        <div class="calc-row" style="border-top: 1px dashed var(--border); padding-top: 10px;">
+          <span>Total GST Tax Liability</span>
+          <span class="col-mono" style="font-weight: 600;">₹0.00</span>
+        </div>
+
+        <div class="calc-row total-due">
+          <span>Total Invoice Amount</span>
+          <span class="col-mono">₹0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms, Notes, and Signature Footer -->
+    <footer class="invoice-footer-grid">
+      <div class="invoice-terms-notes">
+        <span class="notes-title">Terms & Conditions</span>
+        <p class="notes-body">—</p>
+      </div>
+      
+      <div class="invoice-signature-block">
+        <div class="signature-line"></div>
+        <div class="signature-title">Authorized Signatory</div>
+        <div class="signature-company">—</div>
+      </div>
+    </footer>
+
+  </div>
+  </div>
+
+  <script src="/assets/js/supabase-config.js"></script>
+  <script src="/assets/js/supabase-bridge.js" defer></script>
+  <script src="/assets/js/supabase-layer.js" defer></script>
+  <script src="/assets/js/app.js" defer></script>
+</body>
+</html>

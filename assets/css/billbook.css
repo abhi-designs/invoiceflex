@@ -1,0 +1,449 @@
+/* --- InvoiceFlex Bill Book (Folders & Document Pages) Styles --- */
+
+.billbook-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.billbook-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  flex-wrap: wrap;
+}
+
+.billbook-crumb-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  transition: background-color 0.18s ease, transform 0.14s var(--ease-spring);
+}
+
+.billbook-crumb-btn:hover {
+  background-color: var(--primary-light);
+}
+
+.billbook-crumb-btn:active {
+  transform: scale(0.96);
+}
+
+/* Real-Life Folder Cards Grid */
+.billbook-folders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: clamp(12px, 2vw, 18px);
+  margin-bottom: 28px;
+}
+
+.folder-card {
+  position: relative;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: clamp(16px, 2.2vw, 20px);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  max-width: 100%;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.22s var(--ease-spring), box-shadow 0.22s var(--ease-spring), border-color 0.2s ease;
+}
+
+.folder-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+.folder-card:active {
+  transform: scale(0.975);
+}
+
+.folder-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.folder-squircle {
+  width: 52px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.folder-squircle::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 22px;
+  height: 8px;
+  border-radius: 6px 6px 0 0;
+  background-color: inherit;
+}
+
+.folder-squircle.blue { background-color: rgba(0, 122, 255, 0.14); color: #007AFF; }
+.folder-squircle.amber { background-color: rgba(255, 159, 10, 0.16); color: #FF9F0A; }
+.folder-squircle.emerald { background-color: rgba(52, 199, 89, 0.16); color: #34C759; }
+.folder-squircle.indigo { background-color: rgba(94, 92, 230, 0.16); color: #5E5CE6; }
+.folder-squircle.rose { background-color: rgba(255, 59, 48, 0.14); color: #FF3B30; }
+
+.folder-count-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background-color: var(--bg-input);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.folder-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.folder-desc {
+  font-size: 0.785rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.folder-meta-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.folder-total-val {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Upload Dropzone inside Folder */
+.billbook-dropzone {
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 18px;
+  background-color: var(--bg-card);
+  padding: 22px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.18s var(--ease-spring);
+}
+
+.billbook-dropzone:hover,
+.billbook-dropzone.is-dragover {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.billbook-dropzone-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1;
+}
+
+.billbook-dropzone-info > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.billbook-dropzone-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Pages Grid inside Folder */
+.billbook-pages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: clamp(12px, 2vw, 16px);
+}
+
+.page-tile {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s var(--ease-spring), border-color 0.2s ease;
+}
+
+.page-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+.page-tile:active {
+  transform: scale(0.98);
+}
+
+.page-tile-preview {
+  height: 140px;
+  background-color: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 14px;
+}
+
+.page-tile-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.page-paper-thumb {
+  width: 94px;
+  height: 114px;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #1C1C1E;
+}
+
+.page-paper-tag {
+  font-size: 0.55rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #007AFF;
+}
+
+.page-paper-line {
+  height: 4px;
+  background-color: #E5E5EA;
+  border-radius: 2px;
+}
+
+.page-paper-line.short { width: 60%; }
+.page-paper-line.mid { width: 82%; }
+
+.page-number-corner {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  background-color: var(--bg-glass-strong);
+  color: var(--text-main);
+  padding: 3px 8px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+}
+
+.page-tile-body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.page-tile-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.page-tile-sub {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.page-tile-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: 0.78rem;
+}
+
+/* Page Viewer Modal (Flipping Pages Like a Real Binder) */
+.page-viewer-modal {
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  background-color: var(--bg-glass-strong);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.94) translateY(12px);
+  transition: transform 0.28s var(--ease-spring);
+}
+
+.ios-modal-backdrop.is-open .page-viewer-modal {
+  transform: scale(1) translateY(0);
+}
+
+.page-viewer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-viewer-content {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.page-viewer-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+/* Company Logo / Profile Image Uploader */
+.brand-avatar-uploader {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.brand-avatar-box {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #0A84FF 0%, #0055D4 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.brand-avatar-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.invoice-company-logo-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .billbook-folders-grid,
+  .billbook-pages-grid {
+    grid-template-columns: 1fr;
+  }
+  .billbook-dropzone {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

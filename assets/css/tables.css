@@ -1,0 +1,252 @@
+/* --- InvoiceFlex Clean Apple-Style Ledger Tables --- */
+
+.table-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.table-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 260px;
+  flex-wrap: wrap;
+}
+
+.table-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  -webkit-overflow-scrolling: touch;
+}
+
+.enterprise-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.enterprise-table th {
+  background-color: var(--bg-table-head);
+  padding: 13px 18px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.enterprise-table td {
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.enterprise-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.enterprise-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.enterprise-table tbody tr:hover {
+  background-color: var(--bg-hover);
+}
+
+.enterprise-table.zebra tbody tr:nth-child(even) {
+  background-color: var(--bg-zebra);
+}
+
+.enterprise-table.zebra tbody tr:nth-child(even):hover {
+  background-color: var(--bg-hover);
+}
+
+.col-bold {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.col-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.col-align-right {
+  text-align: right;
+}
+
+/* Clean Tinted Status Indicators */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-badge.paid {
+  background-color: var(--success-light);
+  color: var(--success-dark);
+}
+
+.status-badge.sent {
+  background-color: var(--info-light);
+  color: var(--info-dark);
+}
+
+.status-badge.overdue {
+  background-color: var(--danger-light);
+  color: var(--danger-dark);
+}
+
+.status-badge.draft {
+  background-color: var(--bg-input);
+  color: var(--text-muted);
+}
+
+.status-badge.partial {
+  background-color: var(--warning-light);
+  color: var(--warning-dark);
+}
+
+/* Action Icon Buttons (Touch-Friendly & Tactile) */
+.table-action-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.table-action-icon-btn {
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background-color: var(--bg-card);
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s var(--ease-spring), color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.table-action-icon-btn:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.table-action-icon-btn:active {
+  transform: scale(0.92);
+}
+
+.table-action-icon-btn.delete-hover:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  background-color: var(--danger-light);
+}
+
+/* Empty Filter State */
+.table-empty-state {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.table-empty-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.table-empty-desc {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+}
+
+/* Pagination */
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pagination-text {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  background-color: var(--bg-card);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s var(--ease-spring), all 0.18s ease;
+}
+
+.pagination-btn:hover:not(.disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.pagination-btn:active:not(.disabled) {
+  transform: scale(0.93);
+}
+
+.pagination-btn.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.pagination-btn.disabled {
+  color: var(--text-light);
+  border-color: var(--border);
+  cursor: not-allowed;
+  opacity: 0.5;
+}

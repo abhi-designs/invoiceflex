@@ -1,0 +1,409 @@
+/* --- InvoiceFlex Responsive & Native iPhone Bottom Tab Bar --- */
+
+/* Desktop Sidebar Collapsing via Checkbox Hack */
+#sidebar-toggle-checkbox:checked ~ .app-container {
+  grid-template-columns: var(--sidebar-collapsed-width) 1fr;
+}
+
+#sidebar-toggle-checkbox:checked ~ .app-container .sidebar {
+  width: var(--sidebar-collapsed-width);
+}
+
+#sidebar-toggle-checkbox:checked ~ .app-container .topbar {
+  left: var(--sidebar-collapsed-width);
+}
+
+#sidebar-toggle-checkbox:checked ~ .app-container .sidebar .logo-text,
+#sidebar-toggle-checkbox:checked ~ .app-container .sidebar .nav-link-text,
+#sidebar-toggle-checkbox:checked ~ .app-container .sidebar .user-info,
+#sidebar-toggle-checkbox:checked ~ .app-container .sidebar .logout-text,
+#sidebar-toggle-checkbox:checked ~ .app-container .sidebar .sidebar-footer {
+  display: none;
+}
+
+#sidebar-toggle-checkbox:checked ~ .app-container .sidebar .sidebar-header {
+  padding: 0;
+  justify-content: center;
+}
+
+#sidebar-toggle-checkbox:checked ~ .app-container .sidebar .nav-link {
+  justify-content: center;
+  padding: 12px;
+}
+
+#sidebar-toggle-checkbox:checked ~ .app-container .sidebar .logout-link {
+  justify-content: center;
+  padding: 12px;
+}
+
+/* Laptop Screens (1200px and under) */
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  }
+  .dashboard-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Tablet Screens (992px and under) */
+@media (max-width: 992px) {
+  .app-container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "topbar"
+      "main";
+  }
+
+  .topbar,
+  #sidebar-toggle-checkbox:checked ~ .app-container .topbar {
+    left: 0;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width) !important;
+    transform: translateX(-100%);
+    z-index: 1000;
+    transition: transform 0.34s var(--ease-snappy);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  #sidebar-toggle-checkbox:checked ~ .app-container .sidebar {
+    transform: translateX(0);
+  }
+
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 999;
+    cursor: pointer;
+  }
+
+  #sidebar-toggle-checkbox:checked ~ .mobile-overlay {
+    display: block;
+  }
+
+  #sidebar-toggle-checkbox:checked ~ .app-container .sidebar .logo-text,
+  #sidebar-toggle-checkbox:checked ~ .app-container .sidebar .nav-link-text,
+  #sidebar-toggle-checkbox:checked ~ .app-container .sidebar .user-info,
+  #sidebar-toggle-checkbox:checked ~ .app-container .sidebar .logout-text,
+  #sidebar-toggle-checkbox:checked ~ .app-container .sidebar .sidebar-footer {
+    display: flex !important;
+  }
+
+  #sidebar-toggle-checkbox:checked ~ .app-container .sidebar .sidebar-header {
+    padding: 0 22px;
+    justify-content: flex-start;
+  }
+
+  #sidebar-toggle-checkbox:checked ~ .app-container .sidebar .nav-link,
+  #sidebar-toggle-checkbox:checked ~ .app-container .sidebar .logout-link {
+    justify-content: flex-start;
+    padding: 11px 14px;
+  }
+
+  .invoice-actions-panel {
+    flex-direction: column;
+    gap: 14px;
+    align-items: stretch;
+  }
+
+  .actions-panel-right {
+    justify-content: flex-end;
+  }
+}
+
+/* iPhone & Mobile Screens (768px and under) */
+@media (max-width: 768px) {
+  :root {
+    --topbar-height: 54px;
+  }
+
+  .topbar {
+    padding: 0 14px;
+  }
+
+  .main-content {
+    padding: 16px 14px calc(var(--mobile-tabbar-height) + 26px + env(safe-area-inset-bottom, 0px)) 14px;
+  }
+
+  .card {
+    padding: 16px 14px;
+    border-radius: 18px;
+    margin-bottom: 16px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 165px), 1fr));
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 15px 14px;
+    border-radius: 18px;
+  }
+
+  .stat-value {
+    font-size: clamp(1.08rem, 4.4vw, 1.3rem);
+  }
+
+  .quick-actions-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 10px;
+  }
+
+  .form-grid, .form-grid-3 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .table-header-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .table-actions-left {
+    min-width: 100%;
+  }
+
+  .table-actions-right {
+    justify-content: space-between;
+  }
+
+  .table-actions-right .btn {
+    width: 100%;
+  }
+
+  .topbar .search-wrapper {
+    display: none;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .user-profile-menu {
+    padding: 2px;
+  }
+
+  /* Native iPhone Frosted Bottom Tab Bar */
+  .mobile-tabbar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--mobile-tabbar-height) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-color: var(--bg-glass-strong);
+    backdrop-filter: blur(26px) saturate(190%);
+    -webkit-backdrop-filter: blur(26px) saturate(190%);
+    border-top: 1px solid var(--border);
+    z-index: 950;
+  }
+
+  .mobile-tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    height: 100%;
+    color: var(--text-light);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.16s ease, transform 0.14s var(--ease-spring);
+  }
+
+  .mobile-tab-item:active {
+    transform: scale(0.90);
+  }
+
+  .mobile-tab-item.active {
+    color: var(--primary);
+  }
+
+  .mobile-tab-item svg {
+    width: 21px;
+    height: 21px;
+  }
+}
+
+/* Compact iPhone Screens (460px and under) */
+@media (max-width: 460px) {
+  .stats-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page-title {
+    font-size: 1.02rem;
+  }
+
+  .enterprise-table th, .enterprise-table td {
+    padding: 12px 12px;
+  }
+
+  .btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .ios-modal-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Global Grid-Child Auto-Fit & Overflow Prevention Across All Pages */
+.settings-grid > *,
+.profile-grid > *,
+.detail-grid > *,
+.invoice-builder-layout > *,
+.faq-grid > *,
+.support-form-layout > *,
+.profile-meta-metrics > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Ultra-Clean Mobile Card-Rows for Data Tables & Line Items (<= 680px) */
+@media (max-width: 680px) {
+  /* Customer view header & metrics stack cleanly on iPhone */
+  .profile-header-grid {
+    grid-template-columns: 60px 1fr !important;
+    gap: 14px !important;
+  }
+  .profile-header-grid > div:last-child {
+    grid-column: 1 / -1;
+  }
+  .profile-avatar {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 1.35rem !important;
+  }
+  .profile-meta-metrics {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* Back + Action bar stacks neatly on small iPhones */
+  .main-content > div[style*="justify-content: space-between"] {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .main-content > div[style*="justify-content: space-between"] .btn-group {
+    width: 100%;
+    justify-content: stretch;
+  }
+  .main-content > div[style*="justify-content: space-between"] .btn-group > * {
+    flex: 1;
+  }
+
+  /* Convert data tables into native iPhone grouped tap-cards */
+  .table-responsive-wrapper {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .enterprise-table,
+  .enterprise-table tbody,
+  .enterprise-table tr,
+  .enterprise-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .enterprise-table thead {
+    display: none;
+  }
+
+  .enterprise-table tbody tr {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-xs);
+  }
+
+  .enterprise-table tbody tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .enterprise-table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    white-space: normal;
+    text-align: right;
+  }
+
+  .enterprise-table td:last-child {
+    border-bottom: none;
+    padding-bottom: 2px;
+  }
+
+  .enterprise-table td:first-child:has(input[type="checkbox"]) {
+    display: none;
+  }
+
+  .enterprise-table td[data-label]::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-align: left;
+    flex-shrink: 0;
+  }
+
+  .enterprise-table td .table-action-links {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* Invoice Create Line-Item Rows stack cleanly on iPhone */
+  .enterprise-table tr.item-row td {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    padding: 6px 0;
+  }
+
+  .enterprise-table tr.item-row td[data-label]::before {
+    margin-bottom: 4px;
+  }
+
+  .enterprise-table tr.item-row td.col-bold {
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 10px !important;
+  }
+
+  .pagination-container {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-top: 8px;
+  }
+}
+
